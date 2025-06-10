@@ -1,0 +1,39 @@
+﻿@model List<lab2.Models.Question>
+@{
+    ViewData["Title"] = "Запитання і Відповіді";
+    var user = ViewBag.CurrentUser as lab2.Models.User;
+    Layout = null;
+}
+
+<a asp-controller="Home" asp-action="Index">← Назад на головну</a>
+<h1>Запитання і Відповіді</h1>
+
+@foreach (var q in Model)
+{
+    <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 10px;">
+        <p><strong>Користувач:</strong> @q.User.Username</p>
+        <p><strong>Питання:</strong> @q.Text</p>
+
+        @if (!string.IsNullOrEmpty(q.Answer))
+        {
+            <p style="color: green;"><strong>Відповідь:</strong> @q.Answer</p>
+        }
+        else
+        {
+            <p style="color: gray;"><em>Ще без відповіді</em></p>
+        }
+    </div>
+}
+
+@if (user != null)
+{
+    <h2>Задати нове запитання</h2>
+    <form method="post" asp-action="Ask">
+        <textarea name="question" rows="4" cols="50" required></textarea><br />
+        <button type="submit">Надіслати</button>
+    </form>
+}
+else
+{
+    <p><a asp-controller="Account" asp-action="Login">🔐 Увійти</a>, щоб поставити запитання.</p>
+}

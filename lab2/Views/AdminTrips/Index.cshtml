@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Створення нової поїздки";
+    var destinations = ViewBag.Destinations as List<Destination>;
+    Layout = null;
+}
+
+<a href="/home">← Назад на головну</a>
+<h1>🚌 Створити нову поїздку</h1>
+
+<form asp-action="Create" method="post">
+    <label for="destination">Напрямок:</label>
+    <select name="destinationId" id="destination" required>
+        @foreach (var dest in destinations)
+        {
+            <option value="@dest.Id">@dest.Name</option>
+        }
+    </select>
+    <br /><br />
+
+    <label for="date">Дата поїздки:</label>
+    <input type="date" name="date" id="date" required />
+    <br /><br />
+
+    <label for="price">Ціна (грн):</label>
+    <input type="number" name="price" id="price" min="0" required />
+    <br /><br />
+
+    <button type="submit">✅ Створити поїздку</button>
+</form>

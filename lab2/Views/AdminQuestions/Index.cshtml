@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Question>
+
+@{
+    Layout = null;
+}
+
+<a href="/home">← Назад на головну</a>
+<h1>Запитання користувачів</h1>
+
+@foreach (var q in Model)
+{
+    <div style="border: 1px solid #ccc; margin-bottom: 20px; padding: 10px;">
+        <p><strong>Користувач:</strong> @q.User.Username</p>
+        <p><strong>Питання:</strong> @q.Text</p>
+
+        @if (!string.IsNullOrEmpty(q.Answer))
+        {
+            <p style="color: green;"><strong>Відповідь:</strong> @q.Answer</p>
+        }
+        else
+        {
+            <form asp-action="Answer" method="post">
+                <input type="hidden" name="questionId" value="@q.Id" />
+                <textarea name="answer" rows="3" cols="50" required></textarea><br />
+                <button type="submit">Відповісти</button>
+            </form>
+        }
+    </div>
+}

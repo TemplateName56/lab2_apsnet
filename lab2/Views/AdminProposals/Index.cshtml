@@ -1,0 +1,30 @@
+﻿@model List<lab2.Models.ProposedDestination>
+
+@{
+    ViewData["Title"] = "Адмін: Затвердження напрямків";
+    Layout = null;
+}
+
+<a asp-controller="Home" asp-action="Index">← Назад на головну</a>
+<h1>Пропоновані напрямки</h1>
+
+@foreach (var p in Model)
+{
+    <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 10px;">
+        <strong>@p.Name</strong><br />
+        <em>@p.Description</em><br />
+        <p>Голосів: @p.VoteCount</p>
+
+        <form asp-action="HandleAction" method="post" style="display:inline;">
+            <input type="hidden" name="id" value="@p.Id" />
+            <input type="hidden" name="action" value="approve" />
+            <button type="submit">✅ Затвердити</button>
+        </form>
+
+        <form asp-action="HandleAction" method="post" style="display:inline;">
+            <input type="hidden" name="id" value="@p.Id" />
+            <input type="hidden" name="action" value="delete" />
+            <button type="submit">❌ Видалити</button>
+        </form>
+    </div>
+}

@@ -1,0 +1,16 @@
+﻿@model List<lab2.Models.Destination>
+
+@{
+    ViewData["Title"] = "Напрямки подорожей";
+    Layout = null;
+}
+
+<a asp-controller="Home" asp-action="Index">← Назад на головну</a>
+<h1>Список напрямків</h1>
+
+<ul>
+    @foreach (var dest in Model)
+    {
+        <li><strong>@dest.Name</strong>: @dest.Description</li>
+    }
+</ul>

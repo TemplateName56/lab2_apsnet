@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+    var user = ViewData["User"] as lab2.Models.User;
+}
+
+<h1>Ласкаво просимо до Туристичного Агентства</h1>
+
+<ul>
+    <li><a asp-controller="Destinations" asp-action="Index">🌍 Переглянути напрямки</a></li>
+    <li><a asp-controller="Trips" asp-action="Index">✈️ Поїздки</a></li>
+    <li><a asp-controller="Bookings" asp-action="Index">📅 Мої бронювання</a></li>
+    <li><a asp-controller="Questions" asp-action="Index">❓ Запитання та відповіді</a></li>
+    <li><a asp-controller="ProposedDestinations" asp-action="Index">🗳 Пропонувати напрямок</a></li>
+    <li><a asp-controller="AdminTrips" asp-action="Index">🔐 Адмін: Створення поїздок</a></li>
+    <li><a asp-controller="AdminQuestions" asp-action="Index">🔐 Адмін: Модерація запитань</a></li>
+    <li><a asp-controller="AdminProposals" asp-action="Index">🔐 Адмін: Пропозиції напрямків</a></li>
+</ul>
+@if (user != null)
+{
+    <p>
+        👤 Ви увійшли як: <strong>@user.Username</strong>
+        @if (user.Admin)
+        {
+            <span>(Адміністратор)</span>
+        }
+    </p>
+
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <button type="submit">🚪 Вийти</button>
+    </form>
+}
+else
+{
+    <p>
+        <a asp-controller="Account" asp-action="Login">🔐 Увійти</a> |
+        <a asp-controller="Account" asp-action="Register">📝 Зареєструватись</a>
+    </p>
+}

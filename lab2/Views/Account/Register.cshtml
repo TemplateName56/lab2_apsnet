@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Реєстрація";
+    Layout = null;
+}
+
+<a href="@Url.Action("Index", "Home")">← Назад на головну</a>
+<h2>📝 Реєстрація</h2>
+
+<form method="post" asp-action="Register">
+    <label>Ім'я користувача:</label><br />
+    <input type="text" name="username" required /><br /><br />
+
+    <label>Пароль:</label><br />
+    <input type="password" name="password" required /><br /><br />
+
+    <button type="submit">Зареєструватися</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <p style="color: red;">@ViewBag.Error</p>
+}
+
+<p>Вже маєте акаунт? <a href="@Url.Action("Login", "Account")">🔐 Увійти</a></p>

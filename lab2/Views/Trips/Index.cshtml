@@ -1,0 +1,32 @@
+﻿@model List<lab2.Models.Trip>
+@{
+    ViewData["Title"] = "Доступні поїздки";
+    var user = ViewBag.CurrentUser as lab2.Models.User;
+    var bookedTripIds = ViewBag.BookedTripIds as List<long>;
+    Layout = null;
+}
+
+<a asp-controller="Home" asp-action="Index">← Назад на головну</a>
+<h1>Доступні поїздки</h1>
+
+@foreach (var trip in Model)
+{
+    <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 10px;">
+        <strong>Куди: @trip.Destination?.Name</strong><br />
+        <strong>Опис: @trip.Destination?.Description</strong><br />
+        <strong>Дата: @trip.Date.ToString()</strong><br />
+        <strong>Ціна: @trip.Price</strong><br />
+
+        @if (user != null && bookedTripIds != null && !bookedTripIds.Contains(trip.Id))
+        {
+            <form method="post" asp-action="Book" asp-controller="Trips" style="display:inline;">
+                <input type="hidden" name="tripId" value="@trip.Id" />
+                <button type="submit">✅ Забронювати</button>
+            </form>
+        }
+        else if (bookedTripIds != null && bookedTripIds.Contains(trip.Id))
+        {
+            <span style="color:gray;">🔒 Вже заброньовано</span>
+        }
+    </div>
+}

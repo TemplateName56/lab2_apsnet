@@ -1,0 +1,42 @@
+﻿@model List<lab2.Models.ProposedDestination>
+@{
+    ViewData["Title"] = "Пропозиції напрямків";
+    Layout = null;
+    var user = ViewData["User"] as lab2.Models.User;
+}
+
+<a asp-controller="Home" asp-action="Index">← Назад на головну</a>
+
+<h1>Пропоновані напрямки</h1>
+
+@foreach (var p in Model)
+{
+    <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+        <strong>@p.Name</strong><br />
+        <em>@p.Description</em><br />
+        <span>Голосів: @p.VoteCount</span>
+        @if (user != null)
+        {
+            <form method="post" asp-action="Vote">
+                <input type="hidden" name="id" value="@p.Id" />
+                <button type="submit">Голосувати</button>
+            </form>
+        }
+    </div>
+}
+
+@if (user != null)
+{
+    <h2>Запропонувати новий напрямок</h2>
+    <form method="post" asp-action="Add">
+        <label>Назва:</label><br />
+        <input type="text" name="name" required /><br />
+        <label>Опис:</label><br />
+        <textarea name="description" rows="3" cols="50"></textarea><br />
+        <button type="submit">Запропонувати</button>
+    </form>
+}
+else
+{
+    <p><a asp-controller="Account" asp-action="Login">🔐 Увійти</a></p>
+}
